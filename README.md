@@ -1,5 +1,9 @@
 # gdrive-pdf-exporter
 
+<p align="center">
+  <img src="logo.png" alt="gdrive-pdf-exporter logo" width="200"/>
+</p>
+
 Export download-restricted PDFs from Google Drive and Google Classroom — no extensions, no workarounds, just Python.
 
 When a Google Drive file has downloading and printing disabled, the Drive viewer still renders each page as an image. This tool captures those images at full resolution and stitches them into a proper PDF file.
