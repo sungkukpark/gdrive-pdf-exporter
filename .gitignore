@@ -1,0 +1,20 @@
+# Output
+output/
+
+# Browser session (contains Google login cookies — never commit)
+~/.pdf-exporter/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+
+# Playwright
+.playwright/
+
+# OS
+.DS_Store
+Thumbs.db
