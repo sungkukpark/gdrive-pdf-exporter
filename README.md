@@ -21,14 +21,15 @@ When a Google Drive file has downloading and printing disabled, the Drive viewer
 3. Intercepts the internal `drive.google.com/viewer/img` thumbnail requests to extract a session-scoped viewer ID
 4. Uses that viewer ID to fetch every page as a high-resolution PNG (default: 1920px wide), authenticated via session cookies
 5. Converts each page to JPEG and stitches them into a single PDF using `img2pdf`
-6. Saves the result to `pdf/` with the original filename from Drive
+6. Saves the result to `output/` with the original filename from Drive
 
 ---
 
 ## Requirements
 
-- Python 3.8+ from [python.org](https://www.python.org/downloads/) (not MSYS2/Conda)
-- Windows (`.bat` helpers), or any OS running the Python script directly
+- Python 3.8+
+  - **Windows**: install from [python.org](https://www.python.org/downloads/) — avoid MSYS2/Conda builds (no pip)
+  - **macOS**: `brew install python` or [python.org](https://www.python.org/downloads/)
 
 Python packages (auto-installed on first run):
 - `playwright`
@@ -39,28 +40,46 @@ Python packages (auto-installed on first run):
 
 ## Quick start
 
-### First-time setup (Windows)
+### Windows
 
 ```bat
+:: First-time setup
 setup.bat
-```
 
-This installs the Python packages and downloads the Playwright Chromium browser.
-
-### Run
-
-```bat
+:: Run
 run.bat "https://classroom.google.com/u/1/c/.../m/.../details"
 ```
 
 Or directly:
 
-```bash
+```bat
 py export_pdf.py "https://classroom.google.com/u/1/c/.../m/.../details"
 py export_pdf.py "https://drive.google.com/file/d/<file-id>/view"
 ```
 
+### macOS / Linux
+
+```bash
+# First-time setup
+chmod +x setup.sh run.sh
+./setup.sh
+
+# Run
+./run.sh "https://classroom.google.com/u/1/c/.../m/.../details"
+```
+
+Or directly:
+
+```bash
+python3 export_pdf.py "https://classroom.google.com/u/1/c/.../m/.../details"
+python3 export_pdf.py "https://drive.google.com/file/d/<file-id>/view"
+```
+
+---
+
 On first run a browser window opens — log in to your Google account. Your session is saved to `~/.pdf-exporter/browser-profile/` and reused on subsequent runs.
+
+---
 
 ### Options
 
@@ -80,13 +99,13 @@ options:
 
 ```bash
 # Save to default ./output folder
-py export_pdf.py "https://drive.google.com/file/d/1abc.../view"
+python3 export_pdf.py "https://drive.google.com/file/d/1abc.../view"
 
 # Save to a custom folder
-py export_pdf.py "https://classroom.google.com/..." --output "D:/Downloads"
+python3 export_pdf.py "https://classroom.google.com/..." --output "~/Downloads"
 
 # Higher resolution (slower but sharper)
-py export_pdf.py "https://drive.google.com/..." --width 2560
+python3 export_pdf.py "https://drive.google.com/..." --width 2560
 ```
 
 ---
@@ -96,9 +115,11 @@ py export_pdf.py "https://drive.google.com/..." --width 2560
 ```
 export_pdf.py      # All logic — single file, no framework
 requirements.txt   # pip dependencies
-setup.bat          # One-time setup script (Windows)
+setup.bat          # One-time setup (Windows)
+setup.sh           # One-time setup (macOS / Linux)
 run.bat            # Convenience launcher (Windows)
-pdf/               # Output folder — created automatically, not committed
+run.sh             # Convenience launcher (macOS / Linux)
+output/            # Output folder — created automatically, not committed
 ```
 
 ---
